@@ -75,9 +75,7 @@ export default function ImageGridCutter() {
         const imageWidth = image?.width ?? 0;
 
         if (baseHtmlCode) {
-            setHtmlCode(
-                updateHtmlAlignment(baseHtmlCode, tableAlignment)
-            );
+            setHtmlCode(updateHtmlAlignment(baseHtmlCode, tableAlignment));
         } else {
             setHtmlCode('');
         }
@@ -366,7 +364,7 @@ export default function ImageGridCutter() {
                     <div className='flex items-center gap-3 mb-6'>
                         <ImageOff className='w-6 h-6 text-indido-600' />
                         <h1 className='text-xl md:text-2xl font-bold text-gray-800'>
-                            Image eDM Code Generator
+                            Image eDM Code Generator v2
                         </h1>
                     </div>
                     {/* 파일 선택 인풋 필드  */}
@@ -612,22 +610,24 @@ async function generateHtmlTable({
             );
             if (cell) {
                 const displayCol = displayCols.get(cell.id) ?? cell.col + 1;
-                
+
                 // 크기 계산: 모든 크기를 원본 그대로 사용 (보정하지 않음)
                 const x1 = xPositions[cell.col];
                 const y1 = yPositions[cell.row];
                 const x2 = xPositions[cell.col + cell.colSpan];
                 const y2 = yPositions[cell.row + cell.rowSpan];
-                
+
                 // 원본 크기 그대로 사용 (소수점 포함)
-                const cellWidth = x2 - x1;   // 테이블 셀 크기 (원본)
-                const cellHeight = y2 - y1;  // 테이블 셀 크기 (원본)
-                const imgWidth = cellWidth;   // 이미지 크기 (테이블과 동일)
+                const cellWidth = x2 - x1; // 테이블 셀 크기 (원본)
+                const cellHeight = y2 - y1; // 테이블 셀 크기 (원본)
+                const imgWidth = cellWidth; // 이미지 크기 (테이블과 동일)
                 const imgHeight = cellHeight; // 이미지 크기 (테이블과 동일)
-                
+
                 // 디버깅: 크기 계산 결과 로그
-                console.log(`Cell ${cell.id}: 원본 크기 사용 - TD(${cellWidth}x${cellHeight}) IMG(${imgWidth}x${imgHeight})`);
-                
+                console.log(
+                    `Cell ${cell.id}: 원본 크기 사용 - TD(${cellWidth}x${cellHeight}) IMG(${imgWidth}x${imgHeight})`
+                );
+
                 const filename = `cell_${
                     cell.row + 1
                 }-${displayCol}_${imgWidth}x${imgHeight}.png`;
@@ -693,9 +693,9 @@ async function generateHtmlTable({
                 )
             ) {
                 // 단일 셀의 경우 원본 크기 사용
-                const cellWidth = xPositions[c + 1] - xPositions[c];   // 원본 크기
-                const cellHeight = yPositions[r + 1] - yPositions[r];  // 원본 크기
-                
+                const cellWidth = xPositions[c + 1] - xPositions[c]; // 원본 크기
+                const cellHeight = yPositions[r + 1] - yPositions[r]; // 원본 크기
+
                 const emptyTd = `    <td style="padding:0; margin:0; line-height:0; font-size:0; vertical-align:top; width:${cellWidth}px; height:${cellHeight}px; border:none; border-spacing:0;">&nbsp;</td>\n`;
                 pathHtml += emptyTd;
                 dataUrlHtml += emptyTd;
@@ -765,23 +765,13 @@ async function generateAndCacheDataUrls({
 
         // 이미지도 원본 크기 그대로 사용
         const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = w;  // 원본 크기 사용
+        tempCanvas.width = w; // 원본 크기 사용
         tempCanvas.height = h; // 원본 크기 사용
         const tempCtx = tempCanvas.getContext('2d');
         if (!tempCtx) continue;
 
         // 원본 이미지에서 원본 크기로 1:1 크롭
-        tempCtx.drawImage(
-            tempFullCanvas,
-            x,
-            y,
-            w,
-            h,
-            0,
-            0,
-            w,
-            h
-        );
+        tempCtx.drawImage(tempFullCanvas, x, y, w, h, 0, 0, w, h);
 
         const dataUrl = await new Promise<string>((resolve) => {
             tempCanvas.toBlob((blob) => {
