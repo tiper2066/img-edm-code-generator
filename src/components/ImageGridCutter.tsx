@@ -364,11 +364,19 @@ export default function ImageGridCutter() {
             <div className='max-w-[1350px] mx-auto'>
                 <div className='bg-white rounded-2xl shadow-md p-6 md:p-8'>
                     {/* 사이트 앱 타이틀  */}
-                    <div className='flex items-center gap-3 mb-6'>
+                    <div className='flex items-center gap-3 mb-4'>
                         <ImageOff className='w-6 h-6 text-indido-600' />
                         <h1 className='text-xl md:text-2xl font-bold text-gray-800'>
                             Image eDM Code Generator
                         </h1>
+                    </div>
+                    <div className='mb-2'>
+                        <p>
+                            이미지는 그리드를 기준으로 분할되며 그리드 추가,
+                            삭제, 이동 등 편집이 가능합니다. 이미지는 최소화하는
+                            것이 좋으며, 셀을 드래그하여 선택한 후 병합할 수
+                            있습니다.
+                        </p>
                     </div>
                     {/* 파일 선택 인풋 필드  */}
                     <input
