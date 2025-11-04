@@ -588,8 +588,7 @@ export default function Canvas({
     return (
         <div
             ref={containerRef}
-            // className='overflow-auto max-h-[80vh] border border-gray-200 rounded-lg'
-            className='overflow-auto h-[80vh] max-h-[1000px] border border-gray-200 rounded-lg'
+            className='overflow-auto max-h-[70vh] border border-gray-200 rounded-lg'
             onMouseUp={handleCanvasMouseUp}
             onMouseLeave={handleCanvasMouseUp}
             onMouseMove={handleCanvasMouseMove}

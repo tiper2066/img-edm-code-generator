@@ -361,7 +361,7 @@ export default function ImageGridCutter() {
 
     return (
         <div className='min-h-screen bg-gray-50 px-0 py-5 sm:px-5'>
-            <div className='max-w-[1400px] mx-auto'>
+            <div className='max-w-[1350px] mx-auto'>
                 <div className='bg-white rounded-2xl shadow-md p-6 md:p-8'>
                     {/* 사이트 앱 타이틀  */}
                     <div className='flex items-center gap-3 mb-6'>
