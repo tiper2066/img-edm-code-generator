@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ImageOff, Upload, FileImage, Download } from 'lucide-react';
+import { ImageOff, Upload, FileImage, Video } from 'lucide-react';
 import { Button } from '@/components/ui/button'; // Shadcn UI
 import Toolbar from '@/components/Toolbar';
 import Canvas from '@/components/Canvas';
@@ -9,6 +9,17 @@ import HtmlOutput from '@/components/HtmlOutput';
 import LinkManager from '@/components/LinkManager';
 import { generateHtmlTable } from '@/lib/htmlGenerator';
 import { Cell, DragSelection, CellLink } from '@/components/types';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 
 type TableAlignment = 'left' | 'center' | 'right'; // Table 정렬 타입 정의
 
@@ -32,6 +43,8 @@ export default function ImageGridCutter() {
     const [htmlCode, setHtmlCode] = useState<string>('');
     const [previewHtml, setPreviewHtml] = useState<string>('');
     const [isGenerating, setIsGenerating] = useState<boolean>(false);
+    const [isVideoGuideOpen, setIsVideoGuideOpen] = useState<boolean>(false); // 가이드 영상 팝업 상태
+
     const [isPreviewOpen, setIsPreviewOpen] = useState<boolean>(false);
     const [cachedDataUrls, setCachedDataUrls] = useState<Map<string, string>>(
         new Map()
@@ -172,6 +185,7 @@ export default function ImageGridCutter() {
                 setHtmlCode('');
                 setPreviewHtml('');
                 setIsPreviewOpen(false);
+                setIsVideoGuideOpen(false);
                 setCachedDataUrls(new Map());
                 setCellLinks([]);
                 // 새로운 이미지 로드 시 상태 초기화
@@ -364,17 +378,34 @@ export default function ImageGridCutter() {
             <div className='max-w-[1350px] mx-auto'>
                 <div className='bg-white rounded-2xl shadow-md p-6 md:p-8'>
                     {/* 사이트 앱 타이틀  */}
-                    <div className='flex items-center gap-3 mb-4'>
-                        <ImageOff className='w-6 h-6 text-indido-600' />
-                        <h1 className='text-xl md:text-2xl font-bold text-gray-800'>
-                            Image eDM Code Generator
-                        </h1>
+                    <div className='flex items-center justify-between gap-3 mb-4'>
+                        <div className='flex items-center gap-3'>
+                            <ImageOff className='w-6 h-6 text-indido-600' />
+                            <h1 className='text-xl md:text-2xl font-bold text-gray-800'>
+                                Image eDM Code Generator
+                            </h1>
+                        </div>
+                        {/* 가로선 삭제  */}
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    size='icon'
+                                    className='bg-slate-500 hover:bg-slate-600 rounded-full w-8 h-8'
+                                    onClick={() => setIsVideoGuideOpen(true)}
+                                >
+                                    <Video className='h-4 w-4 text-white' />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>사용 가이드 영상</p>
+                            </TooltipContent>
+                        </Tooltip>
                     </div>
                     <div className='mb-2'>
-                        <p>
+                        <p className='text-sm'>
                             이미지는 그리드를 기준으로 분할되며 그리드 추가,
-                            삭제, 이동 등 편집이 가능합니다. 이미지는 최소화하는
-                            것이 좋으며, 셀을 드래그하여 선택한 후 병합할 수
+                            삭제, 이동 등 편집이 가능합니다. 셀을 드래그하여
+                            선택한 후 병합하면 이미지 갯수를 최소화 할 수
                             있습니다.
                         </p>
                     </div>
@@ -521,6 +552,21 @@ export default function ImageGridCutter() {
                     )}
                 </div>
             </div>
+
+            {/* 가이드 영상 팝업 Dialog */}
+            <Dialog open={isVideoGuideOpen} onOpenChange={setIsVideoGuideOpen}>
+                <DialogContent className='min-w-[100vh]'>
+                    <DialogHeader>
+                        <DialogTitle>가이드 영상</DialogTitle>
+                    </DialogHeader>
+                    <video
+                        src='/video/guide.mp4'
+                        autoPlay
+                        controls
+                        className='w-full rounded-lg'
+                    />
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

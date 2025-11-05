@@ -361,7 +361,7 @@ export default function Toolbar({
                             <TooltipTrigger asChild>
                                 <Button
                                     size='icon'
-                                    className='bg-indigo-500 hover:bg-indigo-600'
+                                    className='bg-gray-600 hover:bg-gray-700'
                                     onClick={addHorizontalLine}
                                 >
                                     <Plus className='h-4 w-4 text-white' />
@@ -391,7 +391,7 @@ export default function Toolbar({
                             <TooltipTrigger asChild>
                                 <Button
                                     size='icon'
-                                    className='bg-indigo-500 hover:bg-indigo-600'
+                                    className='bg-gray-600 hover:bg-gray-700'
                                     onClick={addVerticalLine}
                                 >
                                     <Plus className='h-4 w-4 text-white' />
