@@ -435,9 +435,19 @@ export default function ImageGridCutter() {
                             <div className='flex items-center justify-center mx-auto w-16 h-16 bg-gray-100 rounded-full mb-4'>
                                 <Upload className='w-8 h-8 text-gray-400 mx-auto' />
                             </div>
-                            <p className='text-lg text-gray-600 mb-2'>
+                            <p className='text-lg text-gray-600'>
                                 이미지를 여기에 드래그하거나 버튼을 클릭하여
                                 업로드하세요.
+                            </p>
+                            <p className='text-sm text-gray-600 mb-2'>
+                                업로드할 이미지 파일명은 추후 이미지 링크 경로로
+                                사용되기에 <br />
+                                <span className='text-indigo-500'>
+                                    반드시 영문, 숫자, 그리고 특수기호는
+                                    언더바와 밑줄 &#40;&nbsp; _ , -
+                                    &nbsp;&#41;만
+                                </span>{' '}
+                                사용해 주세요.
                             </p>
                             <Button
                                 className='bg-indigo-500 hover:bg-indigo-600'
